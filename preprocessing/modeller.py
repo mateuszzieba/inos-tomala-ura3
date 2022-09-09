@@ -117,7 +117,13 @@ build_profile_ali=os.path.join(model_dir, sequence_name + '.ali')
 aln.write(file=build_profile_ali, alignment_format='PIR')
 
 ## 3 Aligning with the templatefrom modeller.automodel import *
-from modeller import soap_protein_od
+from modeller import *
+env = Environ()
+aln = Alignment(env)
+mdl = Model(env, file=template_pdb, model_segment=('FIRST:A','LAST:A'))
+aln.append_model(mdl, align_codes='3gdk', atom_files=template_pdb)
+aln.append(file=ali_file, align_codes=sequence_name)
+
 aln.align2d(max_gap_length=50)
 
 alignment_ali=os.path.join(model_dir, model_name + '.ali')
